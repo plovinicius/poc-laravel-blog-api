@@ -42,6 +42,7 @@ class TagController extends Controller
 
             return new TagResource($tag);
         } catch(Exception $ex) {
+            // TODO: create custom exception or use translation message
             throw new Exception('Can\'t create a new tag, please, try again later');
         }
     }
