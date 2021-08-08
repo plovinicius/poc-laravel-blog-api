@@ -11,6 +11,7 @@ class ApiTagControllerTest extends TestCase
     use RefreshDatabase;
 
     protected array $tagJson = [
+        'id',
         'name',
         'slug',
     ];
