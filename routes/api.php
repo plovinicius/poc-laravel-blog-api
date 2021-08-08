@@ -18,5 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::name('api.')->group(function() {
     Route::prefix('tags')->name('tags.')->group(function() {
         Route::get('/', [TagController::class, 'index'])->name('index');
+        Route::post('/', [TagController::class, 'store'])->name('store');
     });
 });
