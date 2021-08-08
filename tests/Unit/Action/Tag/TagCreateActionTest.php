@@ -13,7 +13,7 @@ class TagCreateActionTest extends TestCase
 
     public function test_can_create_tag()
     {
-        $data = Tag::factory()->create();
+        $data = Tag::factory()->make();
         $tag = (new TagCreateAction())->execute($data->toArray());
 
         $this->assertInstanceOf(Tag::class, $tag);
