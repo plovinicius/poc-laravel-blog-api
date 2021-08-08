@@ -25,7 +25,7 @@ class TagCreateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255', 'string'],
-            'slug' => ['required', 'max:255', 'string'],
+            'slug' => ['required', 'max:255', 'string', 'unique:tags,slug'],
             'is_active' => ['required', 'bool']
         ];
     }
