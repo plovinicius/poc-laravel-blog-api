@@ -10,12 +10,12 @@ class ApiTagControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $tagJson = [
+    protected array $tagJson = [
         'name',
         'slug',
     ];
 
-    protected $resourceModel = 'App\Models\Tag';
+    protected string $resourceModel = 'App\Models\Tag';
 
     public function test_can_fetch_all_tags()
     {
