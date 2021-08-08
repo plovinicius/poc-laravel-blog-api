@@ -30,4 +30,14 @@ class ApiTagControllerTest extends TestCase
             ],
         ]);
     }
+
+    public function test_can_create_new_tag()
+    {
+        $tag = Tag::factory()->make()->toArray();
+
+        $response = $this->post(route('api.tags.store'), $tag);
+
+        $response->assertStatus(201);
+        $this->assertDatabaseHas('tags', $tag);
+    }
 }
