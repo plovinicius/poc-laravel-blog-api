@@ -2,10 +2,12 @@
 
 namespace App\Actions\Tag;
 
+use Illuminate\Database\Eloquent\Model;
+
 class TagUpdateAction
 {
-    public function execute()
+    public function execute(Model $tag, array $data): bool
     {
-        return 'teste';
+        return $tag->update($data);
     }
 }
