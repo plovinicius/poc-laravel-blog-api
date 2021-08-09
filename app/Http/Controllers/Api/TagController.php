@@ -58,18 +58,15 @@ class TagController extends Controller
      * @param TagUpdateRequest $request
      * @param TagUpdateAction $updateAction
      *
-     * @return JsonResponse
+     * @return TagResource
      * @throws Exception
      */
-    public function update(Tag $tag, TagUpdateRequest $request, TagUpdateAction $updateAction): JsonResponse
+    public function update(Tag $tag, TagUpdateRequest $request, TagUpdateAction $updateAction): TagResource
     {
         try {
-            $updateAction->execute($tag, $request->validated());
+            $updatedTag = $updateAction->execute($tag, $request->validated());
 
-            // TODO: refactor to a translation message
-            return response()->json([
-                'message' => 'Tag updated successfully!'
-            ], 200);
+            return new TagResource($updatedTag);
         } catch(Exception $ex) {
             // TODO: create custom exception or use translation message
             throw new Exception('Can\'t update this tag, please, try again later.');
