@@ -42,6 +42,21 @@ class ApiTagControllerTest extends TestCase
         $this->assertDatabaseHas('tags', $tag);
     }
 
+    public function test_cant_create_tag_with_same_slug()
+    {
+        $tag = Tag::factory()->create([
+            'slug' => 'test'
+        ]);
+
+        $response = $this->post(route('api.tags.store'), [
+            'name' => 'test',
+            'slug' => $tag->slug
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['slug']);
+    }
+
     public function test_can_update_tag()
     {
         $tag = Tag::factory()->create();
