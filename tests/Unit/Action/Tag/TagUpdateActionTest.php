@@ -20,9 +20,8 @@ class TagUpdateActionTest extends TestCase
             'slug' => 'updated-name',
             'is_active' => false
         ];
-        $result = (new TagUpdateAction())->execute($tag, $data);
 
-        $this->assertTrue($result);
+        (new TagUpdateAction())->execute($tag, $data);
         $this->assertDatabaseHas('tags', $data);
     }
 }
