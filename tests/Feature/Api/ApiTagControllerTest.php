@@ -73,4 +73,20 @@ class ApiTagControllerTest extends TestCase
         unset($data['tag']);
         $this->assertDatabaseHas('tags', $data);
     }
+
+    public function test_cant_update_tag_with_same_slug()
+    {
+        $tags = Tag::factory(2)->create();
+
+        $toUpdate = $tags->last();
+        $data = [
+            'tag' => $toUpdate->id,
+            'name' => $toUpdate,
+            'slug' => $tags->first()->slug
+        ];
+
+        $response = $this->put(route('api.tags.update', $data));
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['slug']);
+    }
 }
