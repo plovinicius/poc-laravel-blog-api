@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Tag\TagCreateAction;
+use App\Actions\Tag\TagUpdateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Tag\TagCreateRequest;
+use App\Http\Requests\Api\Tag\TagUpdateRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -17,6 +20,7 @@ class TagController extends Controller
      * @description List all tags
      *
      * @param Request $request
+     *
      * @return AnonymousResourceCollection
      */
     public function index(Request $request): AnonymousResourceCollection
@@ -43,7 +47,32 @@ class TagController extends Controller
             return new TagResource($tag);
         } catch(Exception $ex) {
             // TODO: create custom exception or use translation message
-            throw new Exception('Can\'t create a new tag, please, try again later');
+            throw new Exception('Can\'t create a new tag, please, try again later.');
+        }
+    }
+
+    /**
+     * @description Update a tag
+     *
+     * @param Tag $tag
+     * @param TagUpdateRequest $request
+     * @param TagUpdateAction $updateAction
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function update(Tag $tag, TagUpdateRequest $request, TagUpdateAction $updateAction): JsonResponse
+    {
+        try {
+            $updateAction->execute($tag, $request->validated());
+
+            // TODO: refactor to a translation message
+            return response()->json([
+                'message' => 'Tag updated successfully!'
+            ], 200);
+        } catch(Exception $ex) {
+            // TODO: create custom exception or use translation message
+            throw new Exception('Can\'t update this tag, please, try again later.');
         }
     }
 }
