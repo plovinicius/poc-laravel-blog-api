@@ -41,4 +41,21 @@ class ApiTagControllerTest extends TestCase
         $response->assertStatus(201);
         $this->assertDatabaseHas('tags', $tag);
     }
+
+    public function test_can_update_tag()
+    {
+        $tag = Tag::factory()->create();
+
+        $data = [
+            'tag' => $tag->id,
+            'name' => 'test update tag',
+            'slug' => 'test-update-tag',
+        ];
+
+        $response = $this->put(route('api.tags.update', $data));
+
+        $response->assertStatus(200);
+        unset($data['tag']);
+        $this->assertDatabaseHas('tags', $data);
+    }
 }
