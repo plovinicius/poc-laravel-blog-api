@@ -27,7 +27,7 @@ class TagController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $tags = Tag::all();
+        $tags = Tag::paginate(config('utils.per_page'));
 
         return TagResource::collection($tags);
     }
