@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Tag\TagCreateAction;
+use App\Actions\Tag\TagDeleteAction;
 use App\Actions\Tag\TagUpdateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Tag\TagCreateRequest;
@@ -13,6 +14,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class TagController extends Controller
 {
@@ -70,6 +72,27 @@ class TagController extends Controller
         } catch(Exception $ex) {
             // TODO: create custom exception or use translation message
             throw new Exception('Can\'t update this tag, please, try again later.');
+        }
+    }
+
+    /**
+     * @description Delete a tag
+     *
+     * @param Tag $tag
+     * @param TagDeleteAction $deleteAction
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function destroy(Tag $tag, TagDeleteAction $deleteAction): Response
+    {
+        try {
+            $deleteAction->execute($tag);
+
+            return response('Tag deleted successfully', 200);
+        } catch (Exception $ex) {
+            // TODO: create custom exception or use translation message
+            throw new Exception('Can\'t delete this tag, please, try again later.');
         }
     }
 }

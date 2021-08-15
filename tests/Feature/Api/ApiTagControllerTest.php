@@ -89,4 +89,14 @@ class ApiTagControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertSessionHasErrors(['slug']);
     }
+
+    public function test_can_delete_tag()
+    {
+        $tag = Tag::factory()->create();
+
+        $response = $this->delete(route('api.tags.destroy', $tag));
+
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('tags', $tag->toArray());
+    }
 }

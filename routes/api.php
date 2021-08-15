@@ -20,5 +20,6 @@ Route::name('api.')->group(function() {
         Route::get('/', [TagController::class, 'index'])->name('index');
         Route::post('/', [TagController::class, 'store'])->name('store');
         Route::put('/{tag}/edit', [TagController::class, 'update'])->name('update');
+        Route::delete('/{tag}', [TagController::class, 'destroy'])->name('destroy');
     });
 });
