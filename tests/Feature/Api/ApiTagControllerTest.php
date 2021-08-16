@@ -32,6 +32,18 @@ class ApiTagControllerTest extends TestCase
         ]);
     }
 
+    public function test_can_fetch_all_tags_filtering_by_name()
+    {
+        $tags = Tag::factory(30)->create();
+
+        $response = $this->get(route('api.tags.index'), [
+            'name' => $tags->first()->name
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment(['name' => $tags->first()->name]);
+    }
+
     public function test_can_create_new_tag()
     {
         $tag = Tag::factory()->make()->toArray();

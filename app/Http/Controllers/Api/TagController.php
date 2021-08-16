@@ -26,7 +26,11 @@ class TagController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $tags = Tag::paginate(config('utils.per_page'));
+        $filters = [
+            ['field' => 'name', 'compare' => 'LIKE', 'term' => $request->get('name')]
+        ];
+
+        $tags = Tag::filtered($filters)->paginate(config('utils.per_page'));
 
         return TagResource::collection($tags);
     }
