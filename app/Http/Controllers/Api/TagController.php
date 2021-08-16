@@ -11,7 +11,6 @@ use App\Http\Requests\Api\Tag\TagUpdateRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -27,7 +26,11 @@ class TagController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $tags = Tag::all();
+        $filters = [
+            ['field' => 'name', 'compare' => 'LIKE', 'term' => $request->get('name')]
+        ];
+
+        $tags = Tag::filtered($filters)->paginate(config('utils.per_page'));
 
         return TagResource::collection($tags);
     }
